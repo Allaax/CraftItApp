@@ -5,16 +5,18 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
+    fontFamily: 'Cairo',
     scaffoldBackgroundColor: AppColors.lightBackground,
-    textTheme: _buildTextTheme(Brightness.light),
     buttonTheme: const ButtonThemeData(
       buttonColor: AppColors.primary,
-      textTheme: ButtonTextTheme.primary, // Ensures text color matches the button color
+      textTheme: ButtonTextTheme
+          .primary, // Ensures text color matches the button color
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: AppColors.primary,
-        foregroundColor: AppColors.lightText, // Text color for light mode buttons
+        foregroundColor: AppColors
+            .lightText, // Text color for light mode buttons
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
@@ -30,7 +32,7 @@ class AppTheme {
     ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       selectedItemColor: AppColors.primary,
-      unselectedItemColor: AppColors.lightGrey,
+      unselectedItemColor: AppColors.darkGrey,
       backgroundColor: AppColors.cardsBackgroundLight,
     ),
     cardColor: AppColors.cardsBackgroundLight,
@@ -43,9 +45,10 @@ class AppTheme {
 
   static ThemeData darkTheme = ThemeData(
     brightness: Brightness.dark,
+    fontFamily: 'Cairo',
+
     primaryColor: AppColors.primary,
     scaffoldBackgroundColor: AppColors.darkBackground,
-    textTheme: _buildTextTheme(Brightness.dark),
     buttonTheme: const ButtonThemeData(
       buttonColor: AppColors.primary,
       textTheme: ButtonTextTheme.primary,
@@ -80,29 +83,4 @@ class AppTheme {
     ),
   );
 
-  static TextTheme _buildTextTheme(Brightness brightness) {
-    final Color textColor = (brightness == Brightness.light)
-        ? AppColors.lightText
-        : AppColors.darkText;
-
-    return TextTheme(
-      titleLarge: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.bold,
-        fontSize: 22,
-      ),
-      bodyMedium: TextStyle(
-        color: textColor,
-        fontSize: 16,
-      ),
-      bodySmall: TextStyle(
-        color: textColor.withOpacity(0.7),
-        fontSize: 14,
-      ),
-      button: TextStyle(
-        color: textColor,
-        fontWeight: FontWeight.bold,
-      ),
-    );
-  }
 }

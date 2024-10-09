@@ -38,23 +38,14 @@ class _MainLayoutState extends State<MainLayout> {
           return BottomNavigationBar(
             currentIndex: state.index,
             showUnselectedLabels: true,
-            // currentIndex: widget.currentIndex,
-            // onTap: (index) {
-            //   setState(() => widget.currentIndex = index);
-            //   _loadScreen();
-            // },
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: true,
             iconSize: 28,
             selectedLabelStyle: const TextStyle(
               fontSize: 16.0,
-              color: Colors.white,
-              // fontFamily: GoogleFonts.almarai().fontFamily
             ),
             unselectedLabelStyle: const TextStyle(
-              fontSize: 16.0,
-              color: Colors.cyan,
-              // fontFamily: GoogleFonts.almarai().fontFamily
+              fontSize: 16,
             ),
 
             items: const <BottomNavigationBarItem>[
