@@ -1,3 +1,4 @@
+import 'package:craft_it/core/theme/app_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +18,10 @@ class ThemeSwitchButton extends StatelessWidget {
       onChanged: (value) {
         context.read<ThemeCubit>().toggleTheme();
       },
-      activeColor: Colors.white,
-      inactiveThumbColor: Colors.grey,
+      activeColor: AppColors.white,
+      activeTrackColor: AppColors.primary,
+      inactiveTrackColor: Colors.black12,
+      inactiveThumbColor: AppColors.lightGrey,
     );
   }
 }

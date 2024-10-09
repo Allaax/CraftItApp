@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.1.6
   equatable: ^2.0.5
+  http: ^1.1.0
+  dio:
+  flutter_secure_storage:
+  jwt_decoder:
 
 
 dev_dependencies:

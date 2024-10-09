@@ -1,12 +1,13 @@
 import 'package:craft_it/bloc/cubit/bottom_nav_bar_cubit.dart';
 import 'package:craft_it/bloc/state/bottom_nav_bar_state.dart';
-import 'package:craft_it/presentation/navigation_screens/home_screen.dart';
-import 'package:craft_it/presentation/navigation_screens/profile_screen.dart';
-import 'package:craft_it/presentation/navigation_screens/stores_screen.dart';
-import 'package:craft_it/widgets/themeButton.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'navigation_screens/home_screen.dart';
+import 'navigation_screens/profile_screen.dart';
+import 'navigation_screens/stores_screen.dart';
 
 class MainLayout extends StatefulWidget {
   const MainLayout({super.key});
@@ -16,8 +17,12 @@ class MainLayout extends StatefulWidget {
 }
 
 class _MainLayoutState extends State<MainLayout> {
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return SafeArea(
       child: Scaffold(
         body: BlocBuilder<BottomNavBarCubit, BottomNavBarState>(
@@ -40,12 +45,12 @@ class _MainLayoutState extends State<MainLayout> {
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
             showSelectedLabels: true,
-            iconSize: 28,
-            selectedLabelStyle: const TextStyle(
-              fontSize: 16.0,
+            iconSize:  screenWidth * 0.07,
+            selectedLabelStyle:  TextStyle(
+              fontSize: screenWidth * 0.041,
             ),
-            unselectedLabelStyle: const TextStyle(
-              fontSize: 16,
+            unselectedLabelStyle:  TextStyle(
+              fontSize: screenWidth * 0.041,
             ),
 
             items: const <BottomNavigationBarItem>[
