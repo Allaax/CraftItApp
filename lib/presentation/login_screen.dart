@@ -1,5 +1,5 @@
 import 'package:craft_it/bloc/state/auth_state.dart';
-import 'package:craft_it/presentation/storehome.dart';
+import 'package:craft_it/presentation/store_side/storehome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                   onPressed: () {
                     print("Attempting to login");
 
-                        context.read<AuthCubit>().login(emailController.text, passwordController.text);
+                        context.read<AuthCubit>().login(emailController.text.trim(), passwordController.text.trim());
                   },
                   child: Text('Login'),
                 );

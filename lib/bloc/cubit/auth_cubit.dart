@@ -47,7 +47,18 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthError(e.toString()));
     }
   }
+  Future<void> logout() async {
+    try {
+      // Remove the token from secure storage
+      await secureStorage.delete(key: 'token');
 
+      // Emit the logged-out state
+      emit(AuthLoggedOut());
+    } catch (e) {
+      print("Error logging out: $e");
+      emit(AuthError('Failed to log out.'));
+    }
+  }
 
 
   Future<dynamic> getUserFromToken(String token) async {

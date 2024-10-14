@@ -1,3 +1,4 @@
+import 'package:craft_it/core/constants/api_constants.dart';
 import 'package:dio/dio.dart';
 import '../models/user_model.dart';
 
@@ -8,7 +9,7 @@ class AuthRepository {
   Future<Map<String, dynamic>?> login(String email, String password) async {
     try {
       final response = await dio.post(
-        'http://192.168.1.162:3000/api/v1/users/login',
+        ApiConstants.login,
         data: {'email': email, 'password': password},
       );
       // Print response data for debugging

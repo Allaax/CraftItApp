@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData lightTheme = ThemeData(
+
     brightness: Brightness.light,
     primaryColor: AppColors.primary,
     fontFamily: 'Cairo',
+
     scaffoldBackgroundColor: AppColors.lightBackground,
     buttonTheme: const ButtonThemeData(
       buttonColor: AppColors.primary,

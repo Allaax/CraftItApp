@@ -25,6 +25,7 @@ class _MainLayoutState extends State<MainLayout> {
 
     return SafeArea(
       child: Scaffold(
+
         body: BlocBuilder<BottomNavBarCubit, BottomNavBarState>(
             builder: (context, state) {
               if (state.navbarItem == NavbarItem.home) {
@@ -41,6 +42,8 @@ class _MainLayoutState extends State<MainLayout> {
         bottomNavigationBar: BlocBuilder<BottomNavBarCubit,BottomNavBarState>(
           builder: (context, state){
           return BottomNavigationBar(
+
+
             currentIndex: state.index,
             showUnselectedLabels: true,
             type: BottomNavigationBarType.fixed,
@@ -55,30 +58,33 @@ class _MainLayoutState extends State<MainLayout> {
 
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                label: 'المتاجر',
-                icon: Icon(
-                  Icons.store_rounded,
-                ),
+                label: 'حسابي',
+                icon: Icon(Icons.person_rounded),
               ),
               BottomNavigationBarItem(
                 label: 'الرئيسية',
                 icon: Icon(Icons.home_rounded),
               ),
               BottomNavigationBarItem(
-                label: 'حسابي',
-                icon: Icon(Icons.person_rounded),
+
+                label: 'المتاجر',
+                icon: Icon(
+                  Icons.store_rounded,
+                ),
               ),
+
+
 
 
             ],
             onTap: (index) {
-              if (index == 0) {
-                BlocProvider.of<BottomNavBarCubit>(context)
-                    .getNavBarItem(NavbarItem.home);
-              } else if (index == 1) {
+              if (index == 2) {
                 BlocProvider.of<BottomNavBarCubit>(context)
                     .getNavBarItem(NavbarItem.stores);
-              } else if (index == 2) {
+              } else if (index == 1) {
+                BlocProvider.of<BottomNavBarCubit>(context)
+                    .getNavBarItem(NavbarItem.home);
+              } else if (index == 0) {
                 BlocProvider.of<BottomNavBarCubit>(context)
                     .getNavBarItem(NavbarItem.profile);
               }
