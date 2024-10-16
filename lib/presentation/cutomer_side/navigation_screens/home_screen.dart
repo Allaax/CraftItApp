@@ -12,6 +12,7 @@ import '../../../bloc/state/product_state.dart';
 import '../product_details_screen.dart'; // Import ProductState
 
 class HomeScreen extends StatefulWidget {
+
   const HomeScreen({super.key});
 
   @override

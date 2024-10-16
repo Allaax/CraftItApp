@@ -7,7 +7,7 @@ import '../state/auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthRepository authRepo;
-
+  User? currentUser;
   final FlutterSecureStorage secureStorage = FlutterSecureStorage();
 
   AuthCubit(this.authRepo) : super(AuthInitial()) {
@@ -23,17 +23,19 @@ class AuthCubit extends Cubit<AuthState> {
   //     emit(AuthLoggedOut());
   //   }
   // }
+
   Future<void> login(String email, String password) async {
     emit(AuthLoading());
     try {
       final response = await authRepo.login(email, password);
-      if(response != null){
-        User user =  response['user'];
-        String token =  response['token'];
+      if (response != null) {
+        User user = response['user'];
+        currentUser = user;
+        String token = response['token'];
         await secureStorage.write(key: 'token', value: token);
         print('respone is not null and successful ${user.email}');
         emit(AuthLoggedIn(user)); // Emit logged-in state with user info
-      }else {
+      } else {
         emit(AuthError('Login failed'));
       }
 
@@ -41,12 +43,16 @@ class AuthCubit extends Cubit<AuthState> {
 
       // await secureStorage.write(key: 'token', value: response?['token']);
       // print("logged in ${response.data}");
-
     } catch (e) {
       print("Error logging in: $e");
       emit(AuthError(e.toString()));
     }
   }
+
+  User? getUser() {
+    return currentUser;
+  }
+
   Future<void> logout() async {
     try {
       // Remove the token from secure storage
@@ -59,7 +65,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthError('Failed to log out.'));
     }
   }
-
 
   Future<dynamic> getUserFromToken(String token) async {
     // Decode the token to extract user info

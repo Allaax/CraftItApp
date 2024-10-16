@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:craft_it/presentation/cutomer_side/store_details_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -56,18 +58,21 @@ class _StoresScreenState extends State<StoresScreen> {
             children: [
               // Search Bar
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.only(
+                    left: 16, right: 16, top: 10, bottom: 30),
                 child: SearchAnchor(
                   builder: (BuildContext context, SearchController controller) {
                     return SearchBar(
-                      backgroundColor: MaterialStateProperty.all(
+                      backgroundColor: MaterialStatePropertyAll(
                         Theme.of(context).brightness == Brightness.dark
                             ? AppColors.cardsBackgroundDark
                             : AppColors.white,
                       ),
-                      elevation: MaterialStateProperty.all(0),
-                      padding: MaterialStateProperty.all(EdgeInsets.only(right: 12)),
-                      constraints: BoxConstraints.tightFor(width: double.infinity, height: 40), // Use full width
+                      elevation: const MaterialStatePropertyAll(0),
+                      padding: const MaterialStatePropertyAll(
+                          EdgeInsets.only(right: 12)),
+                      constraints:
+                          const BoxConstraints.tightFor(width: 380, height: 40),
                       controller: controller,
                       onTap: () {
                         controller.openView();
@@ -79,7 +84,8 @@ class _StoresScreenState extends State<StoresScreen> {
                       leading: Icon(Icons.search),
                     );
                   },
-                  suggestionsBuilder: (BuildContext context, SearchController controller) {
+                  suggestionsBuilder:
+                      (BuildContext context, SearchController controller) {
                     return List.generate(5, (index) {
                       final String item = 'item $index ';
                       return ListTile(
@@ -94,30 +100,38 @@ class _StoresScreenState extends State<StoresScreen> {
                   },
                 ),
               ),
+
               // Store List
               Expanded(
-                child: BlocBuilder<StoreCubit, StoreState>(builder: (context, state) {
+                child: BlocBuilder<StoreCubit, StoreState>(
+                    builder: (context, state) {
                   if (state is StoreLoading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (state is StoresLoaded) {
                     final stores = state.stores;
                     return ListView.builder(
-                      padding: EdgeInsets.only(left: 10,right: 10),
-
+                      padding: EdgeInsets.only(left: 10, right: 10),
                       itemCount: stores.length,
                       itemBuilder: (context, index) {
                         final store = stores[index];
+                        double randomRating = 1.0 + Random().nextDouble() * (5.0 - 1.0);
                         return Card(
+                          color: Theme.of(context).brightness == Brightness.dark
+                              ? AppColors.cardsBackgroundDark
+                              : AppColors.cardsBackgroundLight,
                           // Wrap the list item in a Card widget
-                          elevation: 0, // Shadow effect for the card
-                          margin: const EdgeInsets.symmetric(vertical: 8), // Margin between cards
+                          elevation: 0,
+                          // Shadow effect for the card
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          // Margin between cards
                           child: GestureDetector(
                             onTap: () {
                               // Navigate to store details when tapped
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => StoreDetailsScreen(store: store),
+                                  builder: (context) =>
+                                      StoreDetailsScreen(store: store),
                                 ),
                               );
                             },
@@ -125,32 +139,61 @@ class _StoresScreenState extends State<StoresScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0), // Rounded corners for store image
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  // Rounded corners for store image
                                   child: store.image != null
                                       ? CachedNetworkImage(
-                                    imageUrl: store.image.toString(),
-                                    width: double.infinity, // Full width
-                                    height: 150, // Height for the image
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => const Center(child: CircularProgressIndicator()),
-                                    errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
-                                  )
-                                      : const Icon(Icons.store, size: 150), // Fallback icon
+                                          imageUrl: store.image.toString(),
+                                          width: double.infinity,
+                                          // Full width
+                                          height: 150,
+                                          // Height for the image
+                                          fit: BoxFit.cover,
+                                          placeholder: (context, url) =>
+                                              const Center(
+                                                  child:
+                                                      CircularProgressIndicator()),
+                                          errorWidget: (context, url, error) =>
+                                              const Center(
+                                                  child: Icon(Icons.error)),
+                                        )
+                                      : const Icon(Icons.store,
+                                          size: 150), // Fallback icon
                                 ),
-                                const SizedBox(height: 8), // Space between image and text
+                                const SizedBox(height: 8),
+                                // Space between image and text
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0), // Inner padding for text
+                                  padding: const EdgeInsets.all(8.0),
+                                  // Inner padding for text
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        store.name,
-                                        style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 18, // Adjust font size as needed
-                                        ),
-                                      ),
-
+                                      Row(
+                                        children: [
+                                          Text(
+                                            store.name,
+                                            style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize:
+                                                  18, // Adjust font size as needed
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Icon(
+                                                Icons.star,
+                                                color: AppColors.primary,
+                                                size: 16,
+                                              ),
+                                              Text(randomRating.toStringAsFixed(1),)
+                                            ],
+                                          )
+                                        ],
+                                      )
                                     ],
                                   ),
                                 ),

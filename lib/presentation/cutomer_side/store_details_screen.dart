@@ -97,7 +97,7 @@ class StoreDetailsScreen extends StatelessWidget {
                             MaterialPageRoute(
                               builder: (context) => ProductDetailScreen(
                                 product: product,
-
+store: store,
                               ),
                             ),
                           );

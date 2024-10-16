@@ -1,5 +1,6 @@
 import 'package:craft_it/app.dart';
 import 'package:craft_it/bloc/cubit/bottom_nav_bar_cubit.dart';
+import 'package:craft_it/bloc/cubit/cart_cubit.dart';
 import 'package:craft_it/core/theme/app_theme.dart';
 import 'package:craft_it/core/theme/theme_cubit.dart';
 import 'package:craft_it/presentation/login_screen.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => StoreCubit(Dio())..fetchAllStores(),
+        ),
+        BlocProvider(
+          create: (context) => CartCubit(),
         )
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
