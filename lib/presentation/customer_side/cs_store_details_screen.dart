@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:craft_it/presentation/cutomer_side/product_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../widgets/productCard.dart';
+import 'cs_product_details_screen.dart';
 // Import your product model
 
 class StoreDetailsScreen extends StatelessWidget {

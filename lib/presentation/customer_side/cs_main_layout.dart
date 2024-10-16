@@ -5,18 +5,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'navigation_screens/home_screen.dart';
-import 'navigation_screens/profile_screen.dart';
-import 'navigation_screens/stores_screen.dart';
+import 'navigation_screens/cs_home_screen.dart';
+import 'navigation_screens/cs_profile_screen.dart';
+import 'navigation_screens/cs_stores_screen.dart';
 
-class MainLayout extends StatefulWidget {
-  const MainLayout({super.key});
+class CSMainLayout extends StatefulWidget {
+  const CSMainLayout({super.key});
 
   @override
-  State<MainLayout> createState() => _MainLayoutState();
+  State<CSMainLayout> createState() => _CSMainLayoutState();
 }
 
-class _MainLayoutState extends State<MainLayout> {
+class _CSMainLayoutState extends State<CSMainLayout> {
 
   @override
   Widget build(BuildContext context) {

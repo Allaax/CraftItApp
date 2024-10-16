@@ -9,7 +9,8 @@ import '../../../bloc/cubit/category_cubit.dart';
 import '../../../bloc/cubit/product_cubit.dart'; // Import ProductCubit
 import '../../../bloc/state/category_state.dart';
 import '../../../bloc/state/product_state.dart';
-import '../product_details_screen.dart'; // Import ProductState
+import '../cart_screen.dart';
+import '../cs_product_details_screen.dart'; // Import ProductState
 
 class HomeScreen extends StatefulWidget {
 
@@ -51,7 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? const Color(0xFFEEEDED)
                     : AppColors.lightText,
               ),
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CartScreen()))
+              },
             ),
           ),
         ],

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:craft_it/presentation/cutomer_side/store_details_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +8,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../bloc/cubit/store_cubit.dart';
 import '../../../bloc/state/store_state.dart';
 import '../../../core/theme/app_colors.dart';
+import '../cart_screen.dart';
+import '../cs_store_details_screen.dart';
 
 class StoresScreen extends StatefulWidget {
   const StoresScreen({super.key});
@@ -32,7 +33,14 @@ class _StoresScreenState extends State<StoresScreen> {
                     ? Color(0xFFEEEDED)
                     : AppColors.lightText,
               ),
-              onPressed: () => {}, // Add functionality for the cart
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(),
+                  ),
+                )
+              },
             ),
           ),
         ],

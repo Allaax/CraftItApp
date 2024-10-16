@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/cubit/auth_cubit.dart';
-import 'cutomer_side/main_layout.dart';
+import 'customer_side/cs_main_layout.dart';
 
 class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -43,13 +43,13 @@ class LoginScreen extends StatelessWidget {
                     print("Navigating to MainLayout for customer");
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => MainLayout()),
+                      MaterialPageRoute(builder: (context) => CSMainLayout()),
                     );
                   } else if (state.user.role == 'store_owner') {
                     print("Navigating to Store screen for store owner");
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => Store()),
+                      MaterialPageRoute(builder: (context) => StoreHome()),
                     );
                   }
                 }

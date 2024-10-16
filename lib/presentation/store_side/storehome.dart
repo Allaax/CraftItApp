@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-class Store extends StatelessWidget {
-  const Store({super.key});
+class StoreHome extends StatelessWidget {
+  const StoreHome({super.key});
 
   @override
   Widget build(BuildContext context) {

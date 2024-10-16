@@ -3,8 +3,8 @@ import 'package:craft_it/bloc/cubit/bottom_nav_bar_cubit.dart';
 import 'package:craft_it/bloc/cubit/cart_cubit.dart';
 import 'package:craft_it/core/theme/app_theme.dart';
 import 'package:craft_it/core/theme/theme_cubit.dart';
+import 'package:craft_it/presentation/customer_side/cs_main_layout.dart';
 import 'package:craft_it/presentation/login_screen.dart';
-import 'package:craft_it/presentation/cutomer_side/main_layout.dart';
 import 'package:craft_it/presentation/store_side/storehome.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
           create: (context) => StoreCubit(Dio())..fetchAllStores(),
         ),
         BlocProvider(
-          create: (context) => CartCubit(),
+          create: (context) => CartCubit(Dio()),
         )
       ],
       child: BlocBuilder<ThemeCubit, ThemeMode>(
@@ -69,11 +69,11 @@ class MyApp extends StatelessWidget {
                 } else if (authState is AuthLoggedIn) {
                   return authState.user.role == 'customer'
                       ? const Directionality(
-                          textDirection: TextDirection.rtl, child: MainLayout())
+                          textDirection: TextDirection.rtl, child: CSMainLayout())
                       : const Directionality(
                           textDirection: TextDirection.rtl,
                           child:
-                              Store()); // Replace with your actual home screen based on role
+                              StoreHome()); // Replace with your actual home screen based on role
                 } else {
                   print("login");
                   return Directionality(
