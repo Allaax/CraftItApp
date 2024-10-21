@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,16 +20,18 @@ class StoresScreen extends StatefulWidget {
 class _StoresScreenState extends State<StoresScreen> {
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         actions: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:  EdgeInsets.all(screenWidth* 0.02),
             child: IconButton(
               icon: Icon(
                 Icons.shopping_cart_outlined,
                 color: Theme.of(context).brightness == Brightness.dark
-                    ? Color(0xFFEEEDED)
+                    ? const Color(0xFFEEEDED)
                     : AppColors.lightText,
               ),
               onPressed: () => {
@@ -45,180 +46,186 @@ class _StoresScreenState extends State<StoresScreen> {
           ),
         ],
         title: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding:  EdgeInsets.all(screenWidth* 0.02),
           child: Text(
             'المتاجر',
             style: TextStyle(
-              fontSize: 20, // Adjust font size as needed
-              fontWeight: FontWeight.bold,
+              fontSize: screenWidth * 0.055,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
       ),
       body: RefreshIndicator(
+        color: AppColors.primary,
         onRefresh: () async {
-          // BlocProvider.of<ProductCubit>(context).fetchProducts();
+          BlocProvider.of<StoreCubit>(context).fetchAllStores();
         },
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Search Bar
-              Padding(
-                padding: const EdgeInsets.only(
-                    left: 16, right: 16, top: 10, bottom: 30),
-                child: SearchAnchor(
-                  builder: (BuildContext context, SearchController controller) {
-                    return SearchBar(
-                      backgroundColor: MaterialStatePropertyAll(
-                        Theme.of(context).brightness == Brightness.dark
-                            ? AppColors.cardsBackgroundDark
-                            : AppColors.white,
-                      ),
-                      elevation: const MaterialStatePropertyAll(0),
-                      padding: const MaterialStatePropertyAll(
-                          EdgeInsets.only(right: 12)),
-                      constraints:
-                          const BoxConstraints.tightFor(width: 380, height: 40),
-                      controller: controller,
-                      onTap: () {
-                        controller.openView();
-                      },
-                      onChanged: (_) {
-                        controller.openView();
-                      },
-                      hintText: "أبحث عن المتاجر ",
-                      leading: Icon(Icons.search),
-                    );
-                  },
-                  suggestionsBuilder:
-                      (BuildContext context, SearchController controller) {
-                    return List.generate(5, (index) {
-                      final String item = 'item $index ';
-                      return ListTile(
-                        title: Text(item),
-                        onTap: () {
-                          setState(() {
-                            controller.closeView(item);
-                          });
-                        },
-                      );
-                    });
-                  },
-                ),
-              ),
-
-              // Store List
-              Expanded(
-                child: BlocBuilder<StoreCubit, StoreState>(
-                    builder: (context, state) {
-                  if (state is StoreLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (state is StoresLoaded) {
-                    final stores = state.stores;
-                    return ListView.builder(
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      itemCount: stores.length,
-                      itemBuilder: (context, index) {
-                        final store = stores[index];
-                        double randomRating = 1.0 + Random().nextDouble() * (5.0 - 1.0);
-                        return Card(
-                          color: Theme.of(context).brightness == Brightness.dark
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Search Bar
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: screenWidth * 0.04,
+                    right: screenWidth * 0.04,
+                    top: screenHeight * 0.01,
+                    bottom: screenHeight * 0.02,
+                  ),
+                  child: SearchAnchor(
+                    builder: (BuildContext context, SearchController controller) {
+                      return SearchBar(
+                        backgroundColor: MaterialStatePropertyAll(
+                          Theme.of(context).brightness == Brightness.dark
                               ? AppColors.cardsBackgroundDark
-                              : AppColors.cardsBackgroundLight,
-                          // Wrap the list item in a Card widget
-                          elevation: 0,
-                          // Shadow effect for the card
-                          margin: const EdgeInsets.symmetric(vertical: 8),
-                          // Margin between cards
-                          child: GestureDetector(
-                            onTap: () {
-                              // Navigate to store details when tapped
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      StoreDetailsScreen(store: store),
-                                ),
-                              );
-                            },
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  // Rounded corners for store image
-                                  child: store.image != null
-                                      ? CachedNetworkImage(
-                                          imageUrl: store.image.toString(),
-                                          width: double.infinity,
-                                          // Full width
-                                          height: 150,
-                                          // Height for the image
-                                          fit: BoxFit.cover,
-                                          placeholder: (context, url) =>
-                                              const Center(
-                                                  child:
-                                                      CircularProgressIndicator()),
-                                          errorWidget: (context, url, error) =>
-                                              const Center(
-                                                  child: Icon(Icons.error)),
-                                        )
-                                      : const Icon(Icons.store,
-                                          size: 150), // Fallback icon
-                                ),
-                                const SizedBox(height: 8),
-                                // Space between image and text
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  // Inner padding for text
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            store.name,
-                                            style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize:
-                                                  18, // Adjust font size as needed
-                                            ),
+                              : AppColors.white,
+                        ),
+                        elevation: const MaterialStatePropertyAll(0),
+                        padding: MaterialStatePropertyAll(
+                          EdgeInsets.only(
+                              right: screenWidth * 0.03),
+                        ),
+                        constraints: BoxConstraints.tightFor(
+                          width: screenWidth * 0.9,
+                          height:screenHeight * 0.05,
+                        ),
+                        controller: controller,
+                        onTap: () {
+                          controller.openView();
+                        },
+                        onChanged: (_) {
+                          controller.openView();
+                        },
+                        hintText: "أبحث عن المتاجر ",
+                        leading: const Icon(Icons.search),
+                      );
+                    },
+                    suggestionsBuilder:
+                        (BuildContext context, SearchController controller) {
+                      return List.generate(5, (index) {
+                        final String item = 'item $index ';
+                        return ListTile(
+                          title: Text(item),
+                          onTap: () {
+                            setState(() {
+                              controller.closeView(item);
+                            });
+                          },
+                        );
+                      });
+                    },
+                  ),
+                ),
+
+                // Store List
+                BlocBuilder<StoreCubit, StoreState>(
+                    builder: (context, state) {
+                      if (state is StoreLoading) {
+                        return const Center(child: CircularProgressIndicator(color: AppColors.primary,));
+                      } else if (state is StoresLoaded) {
+                        final stores = state.stores;
+                        return ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(), // Disable internal scrolling
+                          padding: EdgeInsets.only(left: screenWidth*0.025, right: screenWidth*0.025),
+                          itemCount: stores.length,
+                          itemBuilder: (context, index) {
+                            final store = stores[index];
+                            double randomRating = 1.0 + Random().nextDouble() * (5.0 - 1.0);
+                            return Card( shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(screenWidth* 0.02),
+                            ),
+
+                              color: Theme.of(context).brightness == Brightness.dark
+                                  ? AppColors.cardsBackgroundDark
+                                  : AppColors.cardsBackgroundLight,
+                              elevation: 0,
+                              margin:  EdgeInsets.symmetric(vertical: screenHeight*0.015),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          StoreDetailsScreen(store: store),
+                                    ),
+                                  );
+                                },
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(screenWidth* 0.02),
+                                      child: store.image != null
+                                          ? CachedNetworkImage(
+                                        imageUrl: store.image.toString(),
+                                        width: double.infinity,
+                                        height:  screenHeight *0.19,
+                                        fit: BoxFit.cover,
+                                        placeholder: (context, url) =>
+                                        const Center(
+                                            child:
+                                            CircularProgressIndicator(
+                                              color: AppColors.primary,
+                                            )),
+                                        errorWidget: (context, url, error) =>
+                                        const Center(
+                                            child: Icon(Icons.error)),
+                                      )
+                                          : const Icon(Icons.store,
                                           ),
-                                          Spacer(),
+                                    ),
+                                    Padding(
+                                      padding:  EdgeInsets.all(screenWidth*0.03),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
                                           Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: AppColors.primary,
-                                                size: 16,
+                                              Text(
+                                                store.name,
+                                                style:  TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: screenWidth*0.045,
+                                                ),
                                               ),
-                                              Text(randomRating.toStringAsFixed(1),)
+                                              const Spacer(),
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                                children: [
+                                                  Icon(
+                                                    Icons.star,
+                                                    color: AppColors.primary,
+                                                    size: screenWidth*0.04,
+                                                  ),
+                                                  Text(randomRating.toStringAsFixed(1),)
+                                                ],
+                                              )
                                             ],
                                           )
                                         ],
-                                      )
-                                    ],
-                                  ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
-                            ),
-                          ),
+                              ),
+                            );
+                          },
                         );
-                      },
-                    );
-                  } else if (state is StoreError) {
-                    return Center(child: Text(state.message));
-                  } else {
-                    return const Center(child: Text("No stores available"));
-                  }
-                }),
-              ),
-            ],
+                      } else if (state is StoreError) {
+                        return Center(child: Text(state.message));
+                      } else {
+                        return const Center(child: Text("المتاجر غير موجودة"));
+                      }
+                    }),
+              ],
+            ),
           ),
         ),
       ),

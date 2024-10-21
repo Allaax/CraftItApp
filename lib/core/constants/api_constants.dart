@@ -4,6 +4,8 @@ class ApiConstants{
   static const allStores = "$baseUrl/stores";
   static const login = "$baseUrl/users/login";
   static const allProducts = "$baseUrl/products/";
-  static const addToCart = "$baseUrl/customers/cart/";
+  static const customersCart = "$baseUrl/customers/cart/";
+  static const orders = "$baseUrl/orders/";
+  static const customer = "$baseUrl/customers/";
 
 }

@@ -20,6 +20,8 @@ class StoreDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -27,24 +29,22 @@ class StoreDetailsScreen extends StatelessWidget {
             // title: Text(store.name),
             ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding:  EdgeInsets.all(screenWidth*0.04),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
                   CircleAvatar(
-                    radius: 40,
+                    radius: screenWidth*0.1,
                     backgroundColor: Colors.grey[200],
                     // Optional: Background color for the avatar
                     child: store.image != null
                         ? ClipOval(
                             child: CachedNetworkImage(
                               imageUrl: store.image!,
-                              height: 80,
-                              // Set to double the radius for better coverage
-                              width: 80,
-                              // Set to double the radius for better coverage
+                              height: screenHeight * 0.1, // Adjust the multiplier for height
+                              width: screenWidth * 0.2,
                               fit: BoxFit.cover,
                               // Cover the CircleAvatar while maintaining aspect ratio
                               placeholder: (context, url) => const Center(
@@ -56,30 +56,36 @@ class StoreDetailsScreen extends StatelessWidget {
                         : const Icon(Icons.store,
                             size: 40), // Use a smaller size for the icon
                   ),
-                  const SizedBox(width: 16),
+                   SizedBox(width: screenWidth*0.04),
                   Text(
                     store.name,
-                    style: const TextStyle(
-                        fontSize: 24, fontWeight: FontWeight.bold),
+                    style:  TextStyle(
+                        fontSize: screenWidth*0.06
+                        , fontWeight: FontWeight.w600),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              Text("${store.bio}"),
-              const SizedBox(height: 8),
-              Text("تواصل معنا: ${store.contactInfo} "),
-              const SizedBox(height: 16),
-              Text("منتجاتنا :",
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold)),
-              const SizedBox(height: 8),
+              Padding(
+                padding:  EdgeInsets.all(screenWidth*0.02),
+                child: Text("${store.bio}"),
+              ),
+              Padding(
+                padding:  EdgeInsets.all(screenWidth*0.02),
+                child: Text("تواصل معنا: ${store.contactInfo} "),
+              ),
+              Padding(
+                padding:  EdgeInsets.all(screenWidth*0.02),
+                child: Text("منتجاتنا :",
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.bold)),
+              ),
               Expanded(
                 // Expand to take available space
                 child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 8,
-                    mainAxisSpacing: 3,
-                    crossAxisCount: 2, // Number of columns
+                  gridDelegate:  SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisSpacing: screenWidth * 0.02,
+                    mainAxisSpacing: screenHeight* 0.01,
+                    crossAxisCount: screenWidth > 600 ? 3 : 2, // Number of columns
                     childAspectRatio: 0.82, // Aspect ratio for each card
                   ),
                   itemCount: store.products?.length ?? 0,

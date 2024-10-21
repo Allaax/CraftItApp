@@ -36,14 +36,15 @@ class ProductCard extends StatelessWidget {
               : AppColors.white,
           elevation: 0, // Lowered the shadow slightly
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(screenWidth * 0.02),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               ClipRRect(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(screenWidth * 0.02),
+                    topRight: Radius.circular(screenWidth * 0.02)),
                 child: CachedNetworkImage(
                   imageUrl: thumbnail,
                   height: screenHeight / 6,
@@ -65,12 +66,19 @@ class ProductCard extends StatelessWidget {
                     Text(
                       productName,
                       style: TextStyle(
-                        fontSize:
-                            screenWidth * 0.035, // Smaller, responsive font size
+                        fontSize: screenWidth *
+                            0.035, // Smaller, responsive font size
                       ),
                       overflow: TextOverflow.ellipsis, // Handle long text
                     ),
-                    Divider(indent:5,endIndent: 6, height: 2,),
+                    Divider(
+                      indent: screenWidth *
+                          0.01,
+                      endIndent: screenWidth *
+                          0.01,
+                      height: screenHeight *
+                          0.003,
+                    ),
                     Text(
                       '$price د.ل ',
                       style: TextStyle(

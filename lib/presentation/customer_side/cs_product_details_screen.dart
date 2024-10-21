@@ -29,6 +29,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
     final user = BlocProvider.of<AuthCubit>(context).currentUser;
 
     return Directionality(
@@ -38,46 +40,46 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
             // title: Text(widget.product.name),
             ),
         body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Image Carousel
-                CarouselSlider.builder(
-                  itemCount: widget.product.images.length,
-                  itemBuilder: (context, index, realIndex) {
-                    return ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        widget.product.images[index],
-                        fit: BoxFit.cover,
-                      ),
-                    );
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Image Carousel
+              CarouselSlider.builder(
+                itemCount: widget.product.images.length,
+                itemBuilder: (context, index, realIndex) {
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(screenWidth * 0.02),
+                    child: Image.network(
+                      widget.product.images[index],
+                      fit: BoxFit.cover,
+                    ),
+                  );
+                },
+                options: CarouselOptions(
+                  height: screenHeight * 0.5,
+                  enlargeCenterPage: true,
+                  autoPlay: true,
+                  aspectRatio: 4 / 3,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentImageIndex = index;
+                    });
                   },
-                  options: CarouselOptions(
-                    height: 300,
-                    enlargeCenterPage: true,
-                    autoPlay: true,
-                    aspectRatio: 16 / 9,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        _currentImageIndex = index;
-                      });
-                    },
-                  ),
                 ),
-                const SizedBox(height: 8),
-                // Image Indicator
-                Row(
+              ),
+
+              Padding(
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: widget.product.images.map((url) {
                     int index = widget.product.images.indexOf(url);
                     return Container(
-                      width: 8.0,
-                      height: 8.0,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10.0, horizontal: 2.0),
+                      width: screenWidth * 0.02,
+                      height: screenHeight * 0.02,
+                      margin: EdgeInsets.symmetric(
+                          vertical: screenHeight * 0.01,
+                          horizontal: screenWidth * 0.01),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: _currentImageIndex == index
@@ -87,195 +89,226 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     );
                   }).toList(),
                 ),
-                // Product Details
+              ),
+              // Product Details
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        widget.product.name,
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18),
+              Padding(
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.product.name,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: screenWidth * 0.045),
+                    ),
+                    const Spacer(),
+                    Text(
+                      "${widget.product.price.toStringAsFixed(2)} د.ل",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: screenWidth * 0.045,
+                        color: AppColors.primary,
                       ),
-                      const Spacer(),
-
-                      Text(
-                        "${widget.product.price.toStringAsFixed(2)} د.ل",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          color: AppColors.primary,
-                        ),
-                      ),
-                      // Rating placeholder (if needed)
-                      // const Icon(Icons.star, color: Colors.amber, size: 24),
-                      // const Text(
-                      //   '4.5',
-                      //   style: TextStyle(fontSize: 16),
-                      // ),
-                    ],
+                    ),
+                  ],
+                ),
+              ),
+              // Product description
+              Divider(),
+              Padding(
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                child: Text(
+                  'عن المنتج :',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: screenWidth * 0.036,
                   ),
                 ),
-                // Product description
-                Divider(),
+              ),
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    'عن المنتج :',
-                    style: const TextStyle(fontWeight: FontWeight.bold),
-                  ),
+              Padding(
+                padding: EdgeInsets.only(right: screenWidth * 0.02),
+                child: Row(
+                  children: [
+                    Text('المادة : ',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.036,
+                        )),
+                    Text(widget.product.material,
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.036,
+                        )),
+                  ],
                 ),
-
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Row(
-                    children: [
-                      Text('المادة : '),
-                      Text(widget.product.material, style: TextStyle()),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.all(8),
-                  child: Row(
-                    children: [
-                      Text('الفئة : '),
-                      Text(
-                        widget.product.category,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                child: Row(
+                  children: [
+                    Text(
+                      'الفئة : ',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.036,
                       ),
-                      Text(
-                        " / ${widget.product.subcategory} ",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                    ),
+                    Text(
+                      widget.product.category,
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.036,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      " / ${widget.product.subcategory} ",
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.036,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                child: widget.store != null
+                    ? Padding(
+                        padding: EdgeInsets.only(right: screenWidth * 0.02),
+                        child: Row(
+                          children: [
+                            Text('من صنع : '),
+                            TextButton(
+                              onPressed: () {},
+                              child: Text(widget.store!.name,
+                                  style: TextStyle(
+                                    color: AppColors.primary,
+                                    fontSize: screenWidth * 0.036,
+                                    // Add any style here
+                                  )),
+                            )
+                          ],
                         ),
                       )
-                    ],
-                  ),
+                    : SizedBox.shrink(),
+              ),
+              Padding(
+                padding: EdgeInsets.only(right: screenWidth * 0.02),
+                child: Row(
+                  children: [
+                    Text('مدة الإنشاء : ',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.036,
+                        )),
+                    Text(widget.product.timeToBeCreated,
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.036,
+                        )),
+                  ],
                 ),
-                SizedBox(
-                  child: widget.store != null
-                      ? Padding(
-                          padding: const EdgeInsets.only(right: 8.0),
-                          child: Row(
-                            children: [
-                              Text('من صنع : '),
-                              TextButton(
-                                onPressed: () {},
-                                child: Text(widget.store!.name,
-                                    style: TextStyle(
-                                      color: AppColors.primary,
-                                      // Add any style here
-                                    )),
-                              )
-                            ],
-                          ),
-                        )
-                      : SizedBox.shrink(),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Row(
-                    children: [
-                      Text('مدة الإنشاء : '),
-                      Text(widget.product.timeToBeCreated, style: TextStyle()),
-                    ],
-                  ),
-                ),
-                Divider(),
-                Padding(
-                    padding: const EdgeInsets.only(top: 10, right: 8.0),
-                    child: Text(
-                      'وصف للمنتج : ',
-                      style: TextStyle(fontWeight: FontWeight.w700),
-                    )),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, right: 8.0),
+              ),
+              Divider(),
+              Padding(
+                  padding: EdgeInsets.only(
+                      top: screenHeight * 0.01, right: screenWidth * 0.02),
                   child: Text(
-                    widget.product.description,
-                    style: const TextStyle(
-                      color: Colors.grey,
-                    ),
-                  ),
-                ),
-                // Size selection
-                // const Text(
-                //   'Select Size',
-                //   style: TextStyle(
-                //     fontSize: 18,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                // const SizedBox(height: 8),
-                // Wrap(
-                //   spacing: 8.0,
-                //   children: ['S', 'M', 'L', 'XL', 'XXL'].map((size) {
-                //     return ChoiceChip(
-                //       label: Text(size),
-                //       selected: selectedSize == size,
-                //       onSelected: (selected) {
-                //         setState(() {
-                //           selectedSize = selected ? size : null;
-                //         });
-                //       },
-                //     );
-                //   }).toList(),
-                // ),
-                // const SizedBox(height: 16),
-                // Color selection
-                Divider(),
-
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0, top: 8),
-                  child: Text(
-                    'أختر اللون',
+                    'وصف للمنتج : ',
                     style: TextStyle(
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.bold,
+                      fontSize: screenWidth * 0.036,
                     ),
+                  )),
+
+              Padding(
+                padding: EdgeInsets.only(
+                    top: screenHeight * 0.01,
+                    bottom: screenHeight * 0.01,
+                    right: screenWidth * 0.02),
+                child: Text(
+                  widget.product.description,
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.036,
+                    color: Colors.grey,
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Wrap(
-                    spacing: 8.0,
-                    children: widget.product.colors.map((color) {
-                      return ChoiceChip(
-                        labelPadding:
-                            EdgeInsets.only(left: 6, right: 6, bottom: 2),
-                        selectedColor: AppColors.selected,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        label: Text(
-                          color,
-                          style: TextStyle(),
+              ),
+              // Size selection
+              // const Text(
+              //   'Select Size',
+              //   style: TextStyle(
+              //     fontSize: 18,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
+              // const SizedBox(height: 8),
+              // Wrap(
+              //   spacing: 8.0,
+              //   children: ['S', 'M', 'L', 'XL', 'XXL'].map((size) {
+              //     return ChoiceChip(
+              //       label: Text(size),
+              //       selected: selectedSize == size,
+              //       onSelected: (selected) {
+              //         setState(() {
+              //           selectedSize = selected ? size : null;
+              //         });
+              //       },
+              //     );
+              //   }).toList(),
+              // ),
+              // const SizedBox(height: 16),
+              // Color selection
+              Divider(),
+
+              Padding(
+                padding: EdgeInsets.only(
+                    right: screenWidth * 0.02, top: screenHeight * 0.01),
+                child: Text(
+                  'أختر اللون',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: screenWidth * 0.036,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                child: Wrap(
+                  spacing: screenHeight*0.02,
+                  children: widget.product.colors.map((color) {
+                    return ChoiceChip(
+                      labelPadding:
+                      EdgeInsets.only(
+                        left: screenWidth * 0.01,
+                        right: screenWidth * 0.01,
+                        bottom:screenHeight * 0.003,
+                      ),                      selectedColor: AppColors.selected,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(screenWidth* 0.02),),
+                      label: Text(
+                        color,
+                        style: TextStyle(
+
                         ),
-                        selected: selectedColor == color,
-                        onSelected: (selected) {
-                          setState(() {
-                            selectedColor = selected ? color : null;
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
+                      ),
+                      selected: selectedColor == color,
+                      onSelected: (selected) {
+                        setState(() {
+                          selectedColor = selected ? color : null;
+                        });
+                      },
+                    );
+                  }).toList(),
                 ),
-                const SizedBox(height: 24),
-                // Add to Cart Button
-              ],
-            ),
+              ),
+              // Add to Cart Button
+            ],
           ),
         ),
         bottomNavigationBar: Padding(
           padding:
-              const EdgeInsets.only(bottom: 8.0, right: 16, left: 16, top: 10),
+               EdgeInsets.only( bottom: screenHeight * 0.01, // Adjust for bottom padding
+                  right: screenWidth* 0.04, // Adjust for right padding
+                  left:screenWidth * 0.04, // Adjust for left padding
+                  top: screenHeight * 0.02),
           child: ElevatedButton(
             onPressed: () {
               context
@@ -291,64 +324,28 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 textColor: Theme.of(context).brightness == Brightness.dark
                     ? AppColors.lightText
                     : AppColors.darkText,
-                fontSize: 16.0,
-
+                fontSize: screenWidth*0.04,
               );
               // _showAddToCartDialog(context);
             },
             style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(
-                vertical: 10.0,
-                horizontal: 16.0,
+              padding:  EdgeInsets.symmetric(
+                  vertical: screenHeight * 0.012,
+                  horizontal: screenWidth * 0.04
               ),
               backgroundColor: AppColors.primary,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(screenWidth* 0.02),
               ),
             ),
-            child: const Text(
+            child:  Text(
               'أضف إلى السلة',
-              style: TextStyle(fontSize: 16),
+              style: TextStyle(fontSize: screenWidth*0.04),
             ),
           ),
         ),
       ),
     );
   }
-// void _showAddToCartDialog(BuildContext context) {
-//   showDialog(
-//     context: context,
-//     builder: (BuildContext context) {
-//       return Directionality(
-//         textDirection: TextDirection.rtl,
-//         child: AlertDialog(
-//           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-//           title: Center(
-//             child: Text('تمت الإضافة إلى السلة بنجاح !' ,
-//             style: TextStyle(
-//               fontSize: 18
-//             ),),
-//           ),
-//           actions: [
-//             TextButton(
-//               onPressed: () {
-//                 // Close the dialog and continue shopping
-//                 Navigator.of(context).pop();
-//               },
-//               child: Text('الاستمرار بالتسوق'),
-//             ),
-//             TextButton(
-//               onPressed: () {
-//                 // Navigate to the cart page
-//                 Navigator.of(context).pop();
-//                 // Navigator.pushNamed(context, '/cart'); // Assuming your cart route is named '/cart'
-//               },
-//               child: Text('الذهاب إلى السلة'),
-//             ),
-//           ],
-//         ),
-//       );
-//     },
-//   );
-// }
+
 }

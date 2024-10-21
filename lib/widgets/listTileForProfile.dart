@@ -23,7 +23,10 @@ class ListTileForProfile extends StatelessWidget {
     return Column(
       children: [
         ListTile(
-          title: Text(title , textDirection: TextDirection.rtl),
+          title: Text(title , textDirection: TextDirection.rtl ,style: TextStyle(
+              fontSize: screenWidth*0.038
+
+          ),),
           leading: leadingIcon,
           trailing: trailing,
           contentPadding:  EdgeInsets.symmetric(horizontal:screenWidth * 0.075),

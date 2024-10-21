@@ -1,7 +1,6 @@
 import 'package:craft_it/bloc/cubit/bottom_nav_bar_cubit.dart';
 import 'package:craft_it/bloc/state/bottom_nav_bar_state.dart';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -21,7 +20,7 @@ class _CSMainLayoutState extends State<CSMainLayout> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
+    // double screenHeight = MediaQuery.of(context).size.height;
 
     return SafeArea(
       child: Scaffold(
@@ -29,11 +28,11 @@ class _CSMainLayoutState extends State<CSMainLayout> {
         body: BlocBuilder<BottomNavBarCubit, BottomNavBarState>(
             builder: (context, state) {
               if (state.navbarItem == NavbarItem.home) {
-                return HomeScreen();
+                return const HomeScreen();
               } else if (state.navbarItem == NavbarItem.stores) {
-                return StoresScreen();
+                return const StoresScreen();
               } else if (state.navbarItem == NavbarItem.profile) {
-                return ProfileScreen();
+                return const ProfileScreen();
               }
               return Container();
             }),
