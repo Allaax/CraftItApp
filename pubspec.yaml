@@ -72,12 +72,18 @@ flutter:
 
   assets:
     - assets/icons/
+    - assets/images/
+    - assets/images/logo.svg
+    - assets/images/logo1.png
     - assets/icons/candle.svg
     - assets/icons/care.svg
     - assets/icons/decore.svg
     - assets/icons/jewelry.svg
     - assets/icons/yarn.svg
   fonts:
+    - family: Kathen
+      fonts:
+        - asset: assets/fonts/Kathen.otf
     - family: Cairo
       fonts:
         - asset: assets/fonts/Cairo-Regular.ttf
