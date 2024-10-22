@@ -220,6 +220,7 @@ class _StoresScreenState extends State<StoresScreen> {
                         );
                       } else if (state is StoreError) {
                         return Center(child: Text(state.message));
+                        print(state.message);
                       } else {
                         return const Center(child: Text("المتاجر غير موجودة"));
                       }

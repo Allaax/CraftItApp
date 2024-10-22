@@ -1,7 +1,7 @@
 import 'package:craft_it/data/models/product_model.dart';
 
 class Store {
-  final String? image;
+  final String image;
   final String name;
   final List<Product>? products; // Now it's a List<Product>
   final int totalOrders;
@@ -10,7 +10,7 @@ class Store {
 
   Store({
     required this.name,
-    this.image,
+    required this.image,
     this.products,
     required this.totalOrders,
     required this.bio,

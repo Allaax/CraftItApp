@@ -14,10 +14,12 @@ class StoreCubit extends Cubit<StoreState> {
   Future<void> fetchStoreByUserId(String userId) async {
     try {
       emit(StoreLoading());
-      final response = await dio.get(ApiConstants.allStores + userId);
+      final response = await dio.get('${ApiConstants.allStores}/$userId');
 
-      if (response.statusCode == 200 && response.data['data'] != null) {
-        final storeData = response.data['data']['store'];
+      print(response.data); // Print the response to check the structure
+
+      if (response.statusCode == 200 && response.data['store'] != null) {
+        final storeData = response.data['store'];
         final store = Store.fromJson(storeData);
         emit(StoreLoaded(store));
       } else {
@@ -27,6 +29,7 @@ class StoreCubit extends Cubit<StoreState> {
       emit(StoreError('Failed to load store: $e'));
     }
   }
+
   Future<void> fetchAllStores() async {
     try {
       emit(StoreLoading());

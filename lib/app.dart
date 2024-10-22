@@ -5,20 +5,26 @@ import 'package:craft_it/bloc/cubit/order_cubit.dart';
 import 'package:craft_it/core/theme/app_theme.dart';
 import 'package:craft_it/core/theme/theme_cubit.dart';
 import 'package:craft_it/data/repo/order_repo.dart';
+import 'package:craft_it/data/repo/storeownerproduct_repo.dart';
+import 'package:craft_it/data/repo/storeside_repository.dart';
 import 'package:craft_it/presentation/customer_side/cs_main_layout.dart';
 import 'package:craft_it/presentation/login_screen.dart';
-import 'package:craft_it/presentation/store_side/storehome.dart';
+import 'package:craft_it/presentation/storeownerside/storemain_layout.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'bloc/cubit/auth_cubit.dart';
 import 'bloc/cubit/category_cubit.dart';
+import 'bloc/cubit/customer_cubit.dart';
 import 'bloc/cubit/product_cubit.dart';
 import 'bloc/cubit/store_cubit.dart';
+import 'bloc/cubit/storeownerproduct_cubit.dart';
+import 'bloc/cubit/storeside_cubit.dart';
 import 'bloc/state/auth_state.dart';
 import 'core/network/dio_client.dart';
 import 'data/repo/auth_repo.dart';
+import 'data/repo/customer_repo.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -33,9 +39,15 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<BottomNavBarCubit>(
           create: (context) => BottomNavBarCubit(),
+        ),BlocProvider<StoreOwnerProductCubit>(
+          create: (context) => StoreOwnerProductCubit(StoreOwnerProductRepository()),
+        ),BlocProvider<StoresideCubit>(
+          create: (context) => StoresideCubit(StoresideRepository()),
         ),
         BlocProvider<ThemeCubit>(
           create: (context) => ThemeCubit(),
+        ),BlocProvider<CustomerCubit>(
+          create: (context) => CustomerCubit(CustomerRepository()),
         ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(AuthRepository()),
@@ -77,7 +89,7 @@ class MyApp extends StatelessWidget {
                       : const Directionality(
                           textDirection: TextDirection.rtl,
                           child:
-                              StoreHome()); // Replace with your actual home screen based on role
+                              storemainlayout()); // Replace with your actual home screen based on role
                 } else {
                   print("login");
                   return Directionality(

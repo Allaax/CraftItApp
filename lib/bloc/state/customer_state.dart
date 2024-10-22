@@ -1,4 +1,5 @@
 // customer_state.dart
+
 import '../../data/models/customer.dart';
 
 abstract class CustomerState {}

@@ -1,5 +1,5 @@
 import 'package:craft_it/bloc/state/auth_state.dart';
-import 'package:craft_it/presentation/store_side/storehome.dart';
+import 'package:craft_it/presentation/storeownerside/storemain_layout.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -50,7 +50,7 @@ class LoginScreen extends StatelessWidget {
                     print("Navigating to Store screen for store owner");
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => StoreHome()),
+                      MaterialPageRoute(builder: (context) => storemainlayout()),
                     );
                   }
                 }
