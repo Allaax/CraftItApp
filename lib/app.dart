@@ -10,6 +10,7 @@ import 'package:craft_it/data/repo/storeside_repository.dart';
 import 'package:craft_it/presentation/customer_side/cs_main_layout.dart';
 import 'package:craft_it/presentation/login_screen.dart';
 import 'package:craft_it/presentation/storeownerside/storemain_layout.dart';
+import 'package:craft_it/presentation/splash.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -95,7 +96,7 @@ class MyApp extends StatelessWidget {
                   return Directionality(
                       textDirection: TextDirection.rtl,
                       child:
-                          LoginScreen()); // Replace with your actual login screen
+                          SplashScreen()); // Replace with your actual login screen
                 }
               },
             ),

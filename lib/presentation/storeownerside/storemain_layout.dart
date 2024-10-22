@@ -57,11 +57,11 @@ class _MainLayoutState extends State<storemainlayout> {
               items: const <BottomNavigationBarItem>[
                 BottomNavigationBarItem(
                   label: 'المنتجات',
-                  icon: Icon(Iconsax.shop),
+                  icon: Icon(Iconsax.box),
                 ),
                 BottomNavigationBarItem(
                   label: 'الرئيسية',
-                  icon: Icon(Iconsax.box),
+                  icon: Icon(Iconsax.shop),
                 ),
                 BottomNavigationBarItem(
                   label: 'الطلبات',

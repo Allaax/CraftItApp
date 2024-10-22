@@ -7,7 +7,7 @@ class CustomerRepository {
 
   Future<Customer?> getCustomerById(String customerId) async {
     try {
-      final response = await dio.get('${ApiConstants.customer}/$customerId'); // Adjust endpoint
+      final response = await dio.get('${ApiConstants.customers}/$customerId'); // Adjust endpoint
 
       // Log the response for debugging
       print('Response data: ${response.data}');

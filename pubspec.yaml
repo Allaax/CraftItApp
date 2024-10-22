@@ -75,6 +75,7 @@ flutter:
     - assets/images/
     - assets/images/logo.svg
     - assets/images/logo1.png
+    - assets/images/human.svg
     - assets/icons/candle.svg
     - assets/icons/care.svg
     - assets/icons/decore.svg

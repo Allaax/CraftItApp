@@ -8,6 +8,7 @@ class ApiConstants{
   static const orders = "$baseUrl/orders/";
   static const customer = "$baseUrl/customers/";
   static const storeOwner = "$baseUrl/stores";
+  static const String customers = '$baseUrl/customers/customer';
   static const storeOwnerProducts = "$baseUrl/stores";
   static const String addstoreownerproduct = '$baseUrl/stores'; // Base URL for store-related endpoints
 

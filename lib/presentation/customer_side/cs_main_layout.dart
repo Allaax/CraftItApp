@@ -3,6 +3,7 @@ import 'package:craft_it/bloc/state/bottom_nav_bar_state.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'navigation_screens/cs_home_screen.dart';
 import 'navigation_screens/cs_profile_screen.dart';
@@ -58,17 +59,17 @@ class _CSMainLayoutState extends State<CSMainLayout> {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 label: 'حسابي',
-                icon: Icon(Icons.person_rounded),
+                icon: Icon(Iconsax.profile_circle),
               ),
               BottomNavigationBarItem(
                 label: 'الرئيسية',
-                icon: Icon(Icons.home_rounded),
+                icon: Icon(Iconsax.home),
               ),
               BottomNavigationBarItem(
 
                 label: 'المتاجر',
                 icon: Icon(
-                  Icons.store_rounded,
+                  Iconsax.shop,
                 ),
               ),
 
